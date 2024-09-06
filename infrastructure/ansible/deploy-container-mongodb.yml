@@ -1,0 +1,57 @@
+---
+- name: Create and manage MongoDB Podman container on a RHEL9 server
+  hosts: prod
+  collections:
+    - containers.podman
+
+  vars:
+    container_name: "mongo"
+    container_image: "docker.io/mongodb/mongodb-community-server:latest"
+    user: "reika"
+    user_group: "reika"
+    mongodb_username: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38666530626436633531666166613432633437333761383666343131346566616561323835656663
+          6165663836653033646533383937653139363438303662610a393333663435363330373734346237
+          61303464396365666265633261396565316163366430386163313637343135613536636130366139
+          3665633265346536630a623764313635336336313465633339336332626664633138336364636566
+          3439
+    mongodb_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30653435353536663061656263373436613761336563326536356334636139656630393334623638
+          3934643337313432656333376564383263323739346165350a353633326135616366616137633363
+          30326331646333656637396665636434303962643064373162313735663632363332616532663630
+          6266623731396433320a643864383733366434616566376335646537636535316338343337383433
+          35353763653636333432333066336339666530323631646532336465633464653166376566643132
+          6530313239326134376662386536343736653133373738643237
+
+  tasks:
+    - name: Create Podman container (rootless)
+      podman_container:
+        name: "{{ container_name }}"
+        image: "{{ container_image }}"
+        labels:
+          io.containers.autoupdate: registry
+        state: created
+        restart_policy: unless-stopped
+        env:
+          MONGO_INITDB_ROOT_USERNAME: "{{ mongodb_username }}"
+          MONGO_INITDB_ROOT_PASSWORD: "{{ mongodb_password }}"
+        ports:
+          - "27017:27017"
+
+    - name: Generate systemd unit file for container
+      podman_generate_systemd:
+        name: "{{ container_name }}"
+        new: true
+        no_header: true
+        dest: "/home/{{ user }}/.config/systemd/user/"
+
+    - name: Ensure container is started and enabled
+      systemd:
+        name: "container-{{ container_name }}.service"
+        scope: user
+        daemon_reload: true
+        state: started
+        enabled: true
+
