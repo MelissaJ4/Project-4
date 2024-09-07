@@ -1,1 +1,1 @@
-password = "mongodb://book_group:JcWE8yGPLVEiCOb30Ys3O1j0byuckaEQ@macragge.reika.io:47017/?authSource=books"
+password = "mongodb://book_group/?authSource=books"
