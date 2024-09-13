@@ -46,6 +46,30 @@ Initially Keras API was used to predict the average rating of a book. No cluster
 
 A cosine similarity model was created in addition to the predictive model. Cosine similarity is a form of collaborative filtering and is often used within recommendation systems. A cosine similarity model is able to offer greater personalization in recommendation systems by utilizing user history and interactions. In the cosine similarity model shown within the “EJ_cosine similarity.ipynb” file, a vector is created for each title. The assessed distance (theta) between two vectors indicates similarity. The presented model has room for improvement, namely by accessing user data rather than genre data in the matrix. This improvement would allow for better, more personalized recommendations based on the data of the individual user and of other users. Where the predictive model would be used on the publisher side of the industry as an indicator for potential success, the cosine similarity model would serve the consumer to recommend new reads based on books they enjoy.
 
+# Content-base Filtering 
+************
+
+Content-based filtering focuses on the characteristics of either the items or the users themselves, without needing to consider the interactions between them. For my book recommendation system, I utilized book reviews and text analysis to identify similarities between books. To do this, I created a new feature that aggregated relevant text for each book and then performed text analysis on this feature.
+
+I experimented with several approaches, starting with the simplest—using just book tags or keywords—and progressing to more complex methods, including review text, cleaned review text, and finally a comprehensive full text field that combined review text with book titles, authors, and publication dates. As anticipated, the most accurate results came from using the full text field.
+
+# Text Analysis
+
+To prepare the text data for the content-based recommendation system, I followed these steps:
+
+-Generated a list of reviews.
+
+- Merged these reviews with book data.
+
+- Since each book had multiple reviews, I concatenated all review texts for each book title and grouped them together.
+
+- Initially, I considered cleaning the text but decided against it, as it led to reduced performance and increased confusion. Keeping the raw text, including proper names and specific terms, helped the model better recognize and match similar books.
+
+- Reintegrated book metadata after realizing I had mistakenly dropped too many columns earlier due to the large size of the data file.
+
+
+Content-based filtering uses cosine similarity to measure how closely attributes (in this case, text) match to determine the similarity between items. This method does not have a straightforward way to measure model accuracy, making the results inherently more subjective.
+
 
 ### Further improvement ideas:
 Due to time constraints, author information could not be included as significant exploration, mapping and joining was needed to add author information to the existing data sets via author ID. This could be a variable to explore with regards to ratings. In addition, running the analysis on multiple iterations of random 10000 subsets to see if changes in the descriptive analyses could be observed to identify possible sampling bias may be beneficial and interesting.
