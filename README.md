@@ -80,7 +80,6 @@ In the future, if specific user data could be accessed, it could be helpful to c
 ### Items in Project 4
 1. Jupyter Notebook python scripts
 2. Visualization folder (includes images of visualizations created for the project and presentation)
-3. Web folder
 
 ### References
 
@@ -88,3 +87,6 @@ Goodreads Book Graph Datasets: https://mengtingwan.github.io/data/goodreads.html
 Cited Sources (as recommended by Goodreads)
 Mengting Wan, Julian McAuley, "Item Recommendation on Monotonic Behavior Chains", in RecSys'18. 
 Mengting Wan, Rishabh Misra, Ndapa Nakashole, Julian McAuley, "Fine-Grained Spoiler Detection from Large-Scale Review Corpora", in ACL'19.
+https://github.com/ArmandDS/jobs_recommendations/blob/master/job_analysis_content_recommendation.ipynb
+https://fritz.ai/recommender-systems-with-python/
+https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada
